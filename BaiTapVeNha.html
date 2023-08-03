@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HomeWork</title>
+  </head>
+  <body>
+    <script>
+      // Cho người dùng nhập vào chữ cái: C/R/U/D
+
+      // - C: Cho người dùng nhập vào tên và tuổi, thêm vào danh sách theo dạng obj
+      // => in ra để kiếm tra dưới dạng table
+
+      // - R: In ra toàn bộ phần tử trong obj
+
+      // - U: Cho người dùng nhập vào ID muốn update, sau đó tìm kiếm trong mảng"
+      //     + Nếu có: Cho nhập vào tên và sử dụng lại
+      //     + Nếu không: In ra không tồn tại
+
+      // - D: Tương tự như Update:
+      // + Nếu có: Xóa user by id
+      // + Nếu không: in ra user not found
+
+      let userList = [
+        {
+          id: 1,
+          name: "Future",
+          age: 20,
+        },
+        {
+          id: 2,
+          name: "Academy",
+          age: 20,
+        },
+      ];
+      // Hàm để in danh sách users dưới dạng table
+      function printUserList(users) {
+        console.log("ID\tName\t\tAge");
+        users.forEach((user) => {
+          console.log(`${user.id}\t${user.name}\t\t${user.age}`);
+        });
+        // console.table(users, ["Id", "Name", "Age"]);
+      }
+
+      // Hàm để thêm user mới vào danh sách
+      function addUser() {
+        const id =
+          userList.length > 0 ? userList[userList.length - 1].id + 1 : 1;
+        const name = prompt("Nhập tên của user:");
+        const age = parseInt(prompt("Nhập tuổi của user:"));
+
+        userList.push({ id, name, age });
+        console.log("User mới đã được thêm vào danh sách!");
+        printUserList(userList);
+      }
+
+      // Hàm để in toàn bộ danh sách users
+      function viewAllUsers() {
+        if (userList.length === 0) {
+          console.log("Danh sách user rỗng.");
+        } else {
+          console.log("Danh sách user:");
+          printUserList(userList);
+        }
+      }
+
+      // Hàm để cập nhật thông tin của user theo ID
+      function updateUser() {
+        const idToUpdate = parseInt(prompt("Nhập ID của user muốn cập nhật:"));
+        const userToUpdate = userList.find((user) => user.id === idToUpdate);
+
+        if (userToUpdate) {
+          const newName = prompt("Nhập tên mới cho user:");
+          userToUpdate.name = newName;
+          console.log("Thông tin user đã được cập nhật!");
+          printUserList(userList);
+        } else {
+          console.log("Không tìm thấy user với ID đã nhập.");
+        }
+      }
+
+      // Hàm để xóa user theo ID
+      function deleteUser() {
+        const idToDelete = parseInt(prompt("Nhập ID của user muốn xóa:"));
+        const userIndexToDelete = userList.findIndex(
+          (user) => user.id === idToDelete
+        );
+
+        if (userIndexToDelete !== -1) {
+          userList.splice(userIndexToDelete, 1);
+          console.log("User đã được xóa khỏi danh sách!");
+          printUserList(userList);
+        } else {
+          console.log("Không tìm thấy user với ID đã nhập.");
+        }
+      }
+
+      // Chương trình chính
+      function main() {
+        let option;
+        do {
+          option = prompt(
+            "Chọn chức năng:\nC - Thêm user\nR - Xem danh sách user\nU - Cập nhật thông tin user\nD - Xóa user\nX - Thoát chương trình"
+          );
+
+          switch (option.toUpperCase()) {
+            case "C":
+              addUser();
+              break;
+            case "R":
+              viewAllUsers();
+              break;
+            case "U":
+              updateUser();
+              break;
+            case "D":
+              deleteUser();
+              break;
+            case "X":
+              console.log("Chương trình kết thúc.");
+              break;
+            default:
+              console.log("Vui lòng chọn chức năng hợp lệ.");
+          }
+        } while (option.toUpperCase() !== "X");
+      }
+      main();
+    </script>
+  </body>
+</html>
